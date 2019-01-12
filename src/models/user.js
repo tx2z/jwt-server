@@ -12,11 +12,10 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    hasuraid: {
-        type: Number,
-        required: true
     }
+    /*
+     * You may want to save more data in the database. Add it here.
+     */
 });
 
 UserSchema.pre('save', function (next) {

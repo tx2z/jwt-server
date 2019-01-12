@@ -33,5 +33,3 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 
-# do not share enviroments files
-src/environments

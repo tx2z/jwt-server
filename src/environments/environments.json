@@ -1,0 +1,10 @@
+{
+    "development": {
+        "JWTSECRET": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "MONGO_URI": "mongodb://mongo:27017/jwtmongo"
+    }, 
+    "production": {
+        "JWTSECRET": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "MONGO_URI": "mongodb://mongo:27017/jwtmongoproduction"
+    }
+}

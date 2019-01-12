@@ -5,26 +5,14 @@ const config = require('../environments/environments')[process.env.NODE_ENV || '
 
 
 function createToken(user) {
-    let credentials;
-    if (user == config.HASURA_ROLE) {
-        credentials = {
-            'https://hasura.io/jwt/claims': {
-                'x-hasura-default-role': user,
-                'x-hasura-allowed-roles': [user],
-            }
-        };
-    } else {
-        credentials = {
-            id: user.id,
-            email: user.email,
-            'https://hasura.io/jwt/claims': {
-                'x-hasura-user-id': (user.hasuraid).toString(),
-                'x-hasura-default-role': 'user',
-                'x-hasura-allowed-roles': ['user'],
+    let credentials = {
+        id: user.id,
+        email: user.email,
+        /*
+         * Add here your custom payload.
+         */
+    };
 
-            }
-        };
-    }
     return jwt.sign(credentials, config.JWTSECRET, {
         expiresIn: 86400 // 86400 expires in 24 hours
     });
@@ -44,46 +32,21 @@ exports.registerUser = (req, res) => {
             return res.status(400).json({ 'msg': 'The user already exists' });
         }
 
-        // Call Hasura API to create user
-        const token = createToken(config.HASURA_ROLE);
-        let data = {
-            query: 'mutation insert_user{insert_user(objects: [{name:"' + req.body.email +'"}]) {returning {id}}}',
-            variables: null,
-            operationName: "insert_user"
-        };
+        /*
+         * Add here the logic and validations that you need and change it as well
+         * in the user model if needed.
+         */
 
-        request.post({
-            headers: {
-                'content-type': 'application/json', 'Authorization': 'Bearer ' + token
-            },
-            url: config.HASURA_URI,
-            json: data
-        }, function (err, httpResponse, body) {
+        let newUser = User(req.body);
+        newUser.save((err, user) => {
             if (err) {
-                console.log(err);
-                return res.status(400).json({ 'msg': 'Error creating user in Hasura' });
-            } else {
-                if (body.data.insert_user.returning[0].id) {
-                    // console.log(body);
-                    // console.log(body.data.insert_user.returning[0].id);
-                    req.body.hasuraid = body.data.insert_user.returning[0].id;
-
-                    let newUser = User(req.body);
-                    newUser.save((err, user) => {
-                        if (err) {
-                            return res.status(400).json({ 'msg': err });
-                        }
-                        return res.status(201).json(user);
-                    });
-                } else {
-                    // console.log(body);
-                    return res.status(400).json({ 'msg': 'Error creating user in Hasura' });
-                }
+                return res.status(400).json({
+                    'msg': err
+                });
             }
-        }); 
+            return res.status(201).json(user);
+        });
 
-
-        
     });
 };
 

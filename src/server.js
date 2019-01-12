@@ -18,13 +18,8 @@ app.use(passport.initialize());
 const passportMiddleware = require('./middleware/passport');
 passport.use(passportMiddleware);
 
-// Demo Route (GET http://localhost:5000)
-app.get('/', function (req, res) {
-    return res.send('Hello! The API is at http://localhost:' + port + '/api');
-});
-
 const routes = require('./routes');
-app.use('/api', routes);
+app.use('/', routes);
 
 mongoose.connect(config.MONGO_URI, { useNewUrlParser: true, useCreateIndex: true });
 
@@ -41,4 +36,4 @@ connection.on('error', (err) => {
 
 // Start the server
 app.listen(port);
-console.log('There will be dragons: http://localhost:' + port);
+console.log('JWT SERVER UP AND READY ON PORT:' + port);

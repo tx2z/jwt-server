@@ -1,0 +1,6 @@
+# replace :80 for API domain
+:80 {
+    proxy / app:5000 {
+        websocket
+    }
+}
