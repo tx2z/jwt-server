@@ -10,14 +10,13 @@
   "author": "tx2z",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.3",
+    "bcrypt": "2.0.1",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.2",
     "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
-    "request": "^2.88.0"
+    "passport-jwt": "^4.0.0"
   }
 }

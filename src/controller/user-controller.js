@@ -1,8 +1,6 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-var request = require('request');
 const config = require('../environments/environments')[process.env.NODE_ENV || 'development'];
-
 
 function createToken(user) {
     let credentials = {
