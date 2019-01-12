@@ -1,8 +1,9 @@
+require('dotenv').load();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const config = require('./environments/environments')[process.env.NODE_ENV || 'development'];
 const port = process.env.PORT || 5000;
 const cors = require('cors');
 
@@ -21,7 +22,7 @@ passport.use(passportMiddleware);
 const routes = require('./routes');
 app.use('/', routes);
 
-mongoose.connect(config.MONGO_URI, { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useCreateIndex: true });
 
 const connection = mongoose.connection;
 

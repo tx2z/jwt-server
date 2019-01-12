@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const config = require('../environments/environments')[process.env.NODE_ENV || 'development'];
 
 function createToken(user) {
     let credentials = {
@@ -11,7 +10,7 @@ function createToken(user) {
          */
     };
 
-    return jwt.sign(credentials, config.JWTSECRET, {
+    return jwt.sign(credentials, process.env.JWTSECRET, {
         expiresIn: 86400 // 86400 expires in 24 hours
     });
 }
